@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Sayang ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .heart-bg {
+            position: absolute;
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.3);
+            animation: fall 15s linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loading-heart {
+            font-size: 5em;
+            animation: pulse 1s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+        }
+
+        .loading-text {
+            color: white;
+            font-size: 1.5em;
+            margin-top: 20px;
+        }
+
+        /* Main Card */
+        .card {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 30px;
+            padding: 50px 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 900px;
+            width: 100%;
+            animation: slideIn 1s ease-out;
+            margin: 20px;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 3em;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            animation: titleBounce 2s infinite;
+        }
+
+        @keyframes titleBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            color: #666;
+            font-style: italic;
+        }
+
+        /* Photo Gallery */
+        .photo-section {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .photo-frame {
+            width: 250px;
+            height: 250px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5em;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            animation: photoRotate 20s linear infinite;
+        }
+
+        @keyframes photoRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .photo-frame::before {
+            content: '';
+            position: absolute;
+            width: 120%;
+            height: 120%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        /* Memory Timeline */
+        .timeline {
+            margin: 40px 0;
+            padding: 30px;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .timeline h2 {
+            color: #764ba2;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .memory-item {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .memory-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .memory-date {
+            color: #764ba2;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .memory-text {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        /* Love Counter */
+        .love-counter {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border-radius: 20px;
+            margin: 30px 0;
+        }
+
+        .counter-title {
+            font-size: 1.5em;
+            color: #764ba2;
+            margin-bottom: 20px;
+        }
+
+        .counter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .counter-box {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .counter-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #667eea;
+            display: block;
+        }
+
+        .counter-label {
+            color: #666;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+
+        /* Love Reasons */
+        .love-reasons {
+            margin: 40px 0;
+            padding: 30px;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 20px;
+        }
+
+        .love-reasons h2 {
+            color: #764ba2;
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 2em;
+        }
+
+        .reason-card {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: transform 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .reason-card:hover {
+            transform: scale(1.05);
+        }
+
+        .reason-icon {
+            font-size: 2em;
+            min-width: 50px;
+            text-align: center;
+        }
+
+        .reason-text {
+            color: #555;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        /* Interactive Buttons */
+        .button-section {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        /* Hidden Content */
+        .hidden {
+            display: none;
+        }
+
+        /* Special Message */
+        .special-message {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .special-message h2 {
+            color: white;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .special-message p {
+            color: white;
+            font-size: 1.3em;
+            line-height: 1.8;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Wish Section */
+        .wish-section {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            margin: 30px 0;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .wish-section h3 {
+            color: #764ba2;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .wish-item {
+            padding: 15px;
+            margin: 10px 0;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 10px;
+            color: #555;
+            font-size: 1.1em;
+        }
+
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            z-index: 9999;
+            animation: confetti-fall 3s linear forwards;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Balloons */
+        .balloon {
+            position: fixed;
+            font-size: 4em;
+            animation: float 6s ease-in-out infinite;
+            z-index: 5;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-30px) translateX(10px); }
+        }
+
+        /* Music Button */
+        .music-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            color: white;
+            font-size: 1.5em;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+
+        .music-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 2em; }
+            .card { padding: 30px 20px; }
+            .photo-frame { width: 200px; height: 200px; font-size: 4em; }
+            button { padding: 12px 30px; font-size: 1em; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-heart">❤️</div>
+        <div class="loading-text">Menyiapkan kejutan spesial...</div>
+    </div>
+
+    <!-- Background Animation -->
+    <div class="bg-animation" id="bgAnimation"></div>
+
+    <!-- Floating Balloons -->
+    <div class="balloon" style="left: 5%; top: 10%;">🎈</div>
+    <div class="balloon" style="right: 8%; top: 15%; animation-delay: 1s;">🎈</div>
+    <div class="balloon" style="left: 12%; top: 60%; animation-delay: 2s;">🎈</div>
+    <div class="balloon" style="right: 10%; top: 70%; animation-delay: 1.5s;">🎈</div>
+    <div class="balloon" style="left: 50%; top: 5%; animation-delay: 0.5s;">🎈</div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <div class="card">
+            <!-- Header -->
+            <div class="header">
+                <h1>🎉 Happy Birthday Sayang! 🎉</h1>
+                <p class="subtitle">Untuk orang tersayang di hari istimewanya</p>
+            </div>
+
+            <!-- Photo Section -->
+            <div class="photo-section">
+                <div class="photo-frame">
+                    <span>🎂</span>
+                </div>
+                <p style="color: #764ba2; font-size: 1.2em; font-weight: bold;">
+                    ✨ You're Special ✨
+                </p>
+            </div>
+
+            <!-- Memory Timeline -->
+            <div class="timeline">
+                <h2>📅 Kenangan Indah Kita</h2>
+                <div class="memory-item">
+                    <div class="memory-date">🌟 Pertama Kali Ketemu</div>
+                    <div class="memory-text">
+                        Momen ketika pertama kali kita bertemu, saat itu aku udah tau kamu spesial banget
+                    </div>
+                </div>
+                <div class="memory-item">
+                    <div class="memory-date">💝 Jalan Pertama kita</div>
+                    <div class="memory-text">
+                        walaupun first time jalan kita yang canggung tapi seru banget, aku ga akan pernah lupa
+                    </div>
+                </div>
+                <div class="memory-item">
+                    <div class="memory-date">🎊 Moment Spesial Kita</div>
+                    <div class="memory-text">
+                        Semua momen bersama kamu adalah moment spesial yang ga akan pernah tergantikan
+                    </div>
+                </div>
+            </div>
+
+            <!-- Love Reasons -->
+            <div class="love-reasons">
+                <h2>💖 Alasan Kenapa Aku Sayang Kamu</h2>
+                <div class="reason-card">
+                    <div class="reason-icon">😊</div>
+                    <div class="reason-text">
+                        Senyummu bisa bikin hari terburukku jadi hari terbaik
+                    </div>
+                </div>
+                <div class="reason-card">
+                    <div class="reason-icon">🤗</div>
+                    <div class="reason-text">
+                        Kamu selalu ada buat aku di saat aku butuh seseorang
+                    </div>
+                </div>
+                <div class="reason-card">
+                    <div class="reason-icon">😂</div>
+                    <div class="reason-text">
+                        Cara kamu ketawa yang konyol tapi bikin aku ikutan bahagia
+                    </div>
+                </div>
+                <div class="reason-card">
+                    <div class="reason-icon">🌟</div>
+                    <div class="reason-text">
+                        Kamu bisa jadi diri sendiri di depan aku, dan aku suka semua sisi kamu
+                    </div>
+                </div>
+                <div class="reason-card">
+                    <div class="reason-icon">💪</div>
+                    <div class="reason-text">
+                        Kamu kuat dan tangguh, tapi juga lembut dan penuh kasih sayang
+                    </div>
+                </div>
+                <div class="reason-card">
+                    <div class="reason-icon">✨</div>
+                    <div class="reason-text">
+                        Keberadaan kamu di hidup aku adalah berkah terbesar yang pernah aku terima
+                    </div>
+                </div>
+            </div>
+
+            <!-- Button Section -->
+            <div class="button-section">
+                <button onclick="showSpecialMessage()">💝 Pesan Spesial</button>
+                <button onclick="createConfetti()">🎊 Rayakan!</button>
+                <button onclick="showWishes()">🌠 Harapan untuk Kamu</button>
+            </div>
+
+            <!-- Special Message (Hidden) -->
+            <div id="specialMessage" class="special-message hidden">
+                <h2>💌 Pesan Khusus Untukmu</h2>
+                <p>
+                    Sayang, di hari spesialmu ini, aku cuma mau bilang terima kasih. 
+                    Terima kasih udah jadi bagian dari hidup aku, terima kasih udah bikin hari-hari aku lebih berwarna. 
+                    Kamu adalah hadiah terindah yang pernah aku terima. 
+                </p>
+                <p style="margin-top: 20px;">
+                    Semoga di tahun ini semua impian kamu tercapai, semua yang kamu inginkan terwujud. 
+                    Aku akan selalu ada di sisi kamu, support kamu, dan sayang sama kamu.
+                </p>
+                <p style="margin-top: 20px; font-size: 1.5em; font-weight: bold;">
+                    I LOVE YOU SO MUCH! ❤️❤️❤️
+                </p>
+            </div>
+
+            <!-- Wishes Section (Hidden) -->
+            <div id="wishSection" class="wish-section hidden">
+                <h3>🌟 Harapan Untuk Tahun Barumu</h3>
+                <div class="wish-item">
+                    ✨ Semoga selalu sehat dan bahagia sepanjang tahun ini
+                </div>
+                <div class="wish-item">
+                    🎯 Semoga semua goals dan target kamu tercapai dengan lancar
+                </div>
+                <div class="wish-item">
+                    💪 Semoga diberi kekuatan untuk hadapi semua tantangan
+                </div>
+                <div class="wish-item">
+                    🌈 Semoga hari-hari kamu selalu dipenuhi kebahagiaan dan cinta
+                </div>
+                <div class="wish-item">
+                    🙏 Semoga kita bisa terus bersama dan saling support satu sama lain
+                </div>
+                <div class="wish-item">
+                    💖 Semoga cinta kita semakin kuat dan langgeng selamanya
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Remove loading screen
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loadingScreen').classList.add('hidden');
+                createConfetti();
+            }, 2000);
+        });
+
+        // Create falling hearts background
+        function createHeartBg() {
+            const hearts = ['❤️', '💕', '💖', '💗', '💝'];
+            const bgAnimation = document.getElementById('bgAnimation');
+            
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart-bg';
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                heart.style.animationDuration = (10 + Math.random() * 10) + 's';
+                bgAnimation.appendChild(heart);
+            }
+        }
+        createHeartBg();
+
+        // Love Counter (edit tanggal mulai hubungan di sini)
+        function updateCounter() {
+            // UBAH TANGGAL INI sesuai tanggal mulai hubungan kalian
+            // Format: tahun, bulan (0-11), tanggal, jam, menit, detik
+            const startDate = new Date(2024, 0, 1, 0, 0, 0); // Contoh: 1 Januari 2024
+            const now = new Date();
+            const diff = now - startDate;
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+        }
+        updateCounter();
+        setInterval(updateCounter, 60000); // Update setiap menit
+
+        // Show special message
+        function showSpecialMessage() {
+            const msg = document.getElementById('specialMessage');
+            if (msg.classList.contains('hidden')) {
+                msg.classList.remove('hidden');
+                msg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                createConfetti();
+            } else {
+                msg.classList.add('hidden');
+            }
+        }
+
+        // Show wishes
+        function showWishes() {
+            const wishes = document.getElementById('wishSection');
+            if (wishes.classList.contains('hidden')) {
+                wishes.classList.remove('hidden');
+                wishes.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                createConfetti();
+            } else {
+                wishes.classList.add('hidden');
+            }
+        }
+
+        // Create confetti
+        function createConfetti() {
+            const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f7dc6f', '#bb8fce', '#85c1e2', '#f8b739'];
+            const shapes = ['●', '■', '▲', '♥', '★'];
+            
+            for (let i = 0; i < 100; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.textContent = shapes[Math.floor(Math.random() * shapes.length)];
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.top = '-20px';
+                    confetti.style.color = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                    confetti.style.animationDelay = Math.random() * 2 + 's';
+                    confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 5000);
+                }, i * 30);
+            }
+        }
+
+        // Auto confetti every 30 seconds
+        setInterval(() => {
+            if (!document.getElementById('loadingScreen').classList.contains('hidden')) return;
+            createConfetti();
+        }, 30000);
+    </script>
+</body>
+</html>
